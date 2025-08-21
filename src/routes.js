@@ -4,6 +4,21 @@ const { generateShortCode } = require("./utils");
 
 const router = express.Router();
 
+
+// Get all URLs with analytics
+router.get("/urls", async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from("urls")
+      .select("short_code, long_url, clicks")
+      .order("id", { ascending: false }); // newest first
+    if (error) throw error;
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Shorten URL
 router.post("/shorten", async (req, res) => {
   try {
@@ -47,7 +62,7 @@ router.get("/:shortCode", async (req, res) => {
     });
     if (incrementResult.error)
       console.error("Increment error:", incrementResult.error);
-    res.redirect(301, longUrl);
+    res.redirect(302, longUrl);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

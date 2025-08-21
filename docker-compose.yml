@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  backend:
+    build: .
+    container_name: url-shortener-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - SUPABASE_URL=https://jqlixwmobrcnidxvwawe.supabase.co
+      - SUPABASE_KEY=sb_publishable_xalz3oXVy39ie-A1bJZFRw_-B6dW4SO
+      - REDIS_URL=redis://redis:6379
+      - PORT=3000
+    depends_on:
+      - redis
+
+  frontend:
+    build: ./frontend
+    container_name: url-shortener-frontend
+    ports:
+      - "3001:3001"
+      # Optionally pass backend URL if not localhost
+    depends_on:
+      - backend
+
+  redis:
+    image: redis:7
+    container_name: url-shortener-redis
+    ports:
+      - "6379:6379"
