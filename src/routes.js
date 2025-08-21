@@ -25,25 +25,28 @@ router.post("/shorten", async (req, res) => {
 });
 
 // Redirect
-router.get('/:shortCode', async (req, res) => {
+router.get("/:shortCode", async (req, res) => {
   try {
     const { shortCode } = req.params;
     // Check Redis cache
     let longUrl = await redisClient.get(`url:${shortCode}`);
     if (!longUrl) {
       const { data, error } = await supabase
-        .from('urls')
-        .select('long_url')
-        .eq('short_code', shortCode)
+        .from("urls")
+        .select("long_url")
+        .eq("short_code", shortCode)
         .single();
-      if (error || !data) return res.status(404).json({ error: 'URL not found' });
+      if (error || !data)
+        return res.status(404).json({ error: "URL not found" });
       longUrl = data.long_url;
       await redisClient.set(`url:${shortCode}`, longUrl, { EX: 3600 }); // Cache for 1 hour
     }
     // Increment clicks async via RPC (non-blocking and atomic)
-    supabase.rpc('increment_clicks', { short_code_param: shortCode }).then((result) => {
-      if (result.error) console.error('Increment error:', result.error);
+    const incrementResult = await supabase.rpc("increment_clicks", {
+      short_code_param: shortCode,
     });
+    if (incrementResult.error)
+      console.error("Increment error:", incrementResult.error);
     res.redirect(301, longUrl);
   } catch (err) {
     res.status(500).json({ error: err.message });
