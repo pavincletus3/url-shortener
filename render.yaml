@@ -22,6 +22,8 @@ services:
     plan: free
     autoDeploy: true
     envVars: []
+    buildCommand: npm run build
+    startCommand: npm start
 
   - type: redis
     name: redis
