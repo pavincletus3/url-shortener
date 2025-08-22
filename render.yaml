@@ -2,10 +2,8 @@ services:
   - type: web
     name: backend
     env: docker
-    branch: main
-    repo: https://github.com/pavincletus3/url-shortener.git  
-    rootDir: frontend
-    plan: free  
+    dockerfilePath: ./Dockerfile # path to your backend Dockerfile
+    plan: free
     autoDeploy: true
     envVars:
       - key: SUPABASE_URL
@@ -13,32 +11,19 @@ services:
       - key: SUPABASE_KEY
         value: sb_publishable_xalz3oXVy39ie-A1bJZFRw_-B6dW4SO
       - key: REDIS_URL
-        fromService:
-          type: redis
-          name: redis
-          property: connectionString
+        value: redis://redis:6379
       - key: PORT
         value: 3000
-    healthCheckPath: /  # Optional: Add a health check endpoint if available
 
   - type: web
     name: frontend
     env: docker
-    repo: https://github.com/yourusername/your-repo  # Replace with your actual repo URL
-    branch: main
-    rootDir: frontend  # Assumes Dockerfile is in the ./frontend directory
+    dockerfilePath: ./frontend/Dockerfile
     plan: free
     autoDeploy: true
-    envVars:
-      - key: BACKEND_URL  # Optional: If frontend needs to connect to backend
-        fromService:
-          type: web
-          name: backend
-          property: host  # Or use a full URL like https://${BACKEND_URL}
-    healthCheckPath: /  # Optional
+    envVars: []
 
   - type: redis
     name: redis
-    ipAllowList: []  # Optional: Restrict access if needed
-    plan: free  # Or paid plan for persistence and features
-    maxmemoryPolicy: allkeys-lru  # Matches common Redis eviction policy
+    plan: free
+    maxmemoryPolicy: allkeys-lru
