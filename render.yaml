@@ -21,7 +21,9 @@ services:
     dockerfilePath: ./frontend/Dockerfile
     plan: free
     autoDeploy: true
-    envVars: []
+    envVars:
+      - key: NEXT_PUBLIC_BACKEND_URL
+        value: https://backend-oxo4.onrender.com
 
   - type: redis
     name: redis

@@ -7,7 +7,7 @@ export default function ShortenForm({ onShorten }: { onShorten: () => void }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:3000/shorten", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/shorten`, {
       // If deploying, use your deployed backend URL here
       method: "POST",
       headers: { "Content-Type": "application/json" },

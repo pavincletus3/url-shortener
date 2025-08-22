@@ -62,10 +62,16 @@ To run this project locally, you will need to have Docker and Docker Compose ins
 
 ## Environment Variables
 
+### Backend
+
 - `SUPABASE_URL`: The URL of your Supabase project.
 - `SUPABASE_KEY`: The publishable API key for your Supabase project.
 - `REDIS_URL`: The connection URL for your Redis instance.
 - `PORT`: The port for the backend server to run on.
+
+### Frontend
+
+- `NEXT_PUBLIC_BACKEND_URL`: The URL of the deployed backend service. For local development, this should be `http://localhost:3000`.
 
 ## API Endpoints
 

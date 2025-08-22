@@ -11,7 +11,7 @@ export default function UrlList({ refresh }: { refresh: number }) {
   const [urls, setUrls] = useState<ShortUrl[]>([]);
 
   const fetchUrls = async () => {
-    const res = await fetch("http://localhost:3000/urls");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/urls`);
     const data = await res.json();
     setUrls(data);
   };
@@ -24,7 +24,7 @@ export default function UrlList({ refresh }: { refresh: number }) {
     <ul>
       {urls.map((url) => (
         <li key={url.short_code}>
-          <b>Short:</b> <a href={`http://localhost:3000/${url.short_code}`}>{url.short_code}</a>
+          <b>Short:</b> <a href={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${url.short_code}`}>{url.short_code}</a>
           {" | "}
           <b>Long:</b> {url.long_url}
           {" | "}
