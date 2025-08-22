@@ -2,10 +2,9 @@ services:
   - type: web
     name: backend
     env: docker
-    repo: https://github.com/pavincletus3/url-shortener.git  # Replace with your actual repo URL
-    branch: main  # Optional: specify branch if needed
-    rootDir: .  # Assumes Dockerfile is in the root directory
-    plan: free  # Or starter, standard, etc., based on your needs
+    repo: https://github.com/pavincletus3/url-shortener.git  
+    rootDir: . 
+    plan: free  
     autoDeploy: true
     envVars:
       - key: SUPABASE_URL
