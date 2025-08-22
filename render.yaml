@@ -28,4 +28,4 @@ services:
     plan: free
     maxmemoryPolicy: allkeys-lru
     ipAllowList:
-      - source: backend
+      - 0.0.0.0/0
