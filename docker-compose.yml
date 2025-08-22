@@ -15,7 +15,9 @@ services:
       - redis
 
   frontend:
-    build: ./frontend
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
     container_name: url-shortener-frontend
     ports:
       - "3001:3001"
