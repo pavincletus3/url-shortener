@@ -2,7 +2,7 @@ services:
   - type: web
     name: backend
     env: docker
-    dockerfilePath: ./Dockerfile # path to your backend Dockerfile
+    dockerfilePath: ./Dockerfile
     plan: free
     autoDeploy: true
     envVars:
@@ -27,3 +27,5 @@ services:
     name: redis
     plan: free
     maxmemoryPolicy: allkeys-lru
+    ipAllowList:
+      - source: backend
